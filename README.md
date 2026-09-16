@@ -1,1 +1,1 @@
-# beetrood-embedded-course
+# beetroot-embedded-course
