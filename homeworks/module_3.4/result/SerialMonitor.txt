@@ -1,0 +1,17 @@
+I (250) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (257) main_task: Started on CPU0
+I (277) main_task: Calling app_main()
+I (277) Main: Player ON!
+I (277) Main: Playing track [0]: Mario
+I (10877) BuzzerPlayer: Finished playing melody.
+I (12477) Main: Playing track [1]: Success Sound
+I (12927) BuzzerPlayer: Finished playing melody.
+I (14477) Main: Playing track [2]: Failed
+I (15127) BuzzerPlayer: Finished playing melody.
+I (16677) Main: Playing track [3]: Sigma Face
+I (21327) BuzzerPlayer: Finished playing melody.
+I (22877) Main: Playing track [4]: GigaChad Theme
+I (28127) BuzzerPlayer: Finished playing melody.
+I (29677) Main: Playing track [5]: Chipi Chipi Chapa Chapa
+I (34427) BuzzerPlayer: Finished playing melody.
+I (35977) Main: Playing track [0]: Mario
