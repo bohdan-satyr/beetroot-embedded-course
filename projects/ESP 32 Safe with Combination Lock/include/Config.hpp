@@ -2,7 +2,6 @@
 #include "driver/gpio.h"
 
 namespace Config {
-    // Конфігурація пінів
     constexpr gpio_num_t potGpioPin = GPIO_NUM_1;
     constexpr gpio_num_t servoPin = GPIO_NUM_2;
     constexpr gpio_num_t buzzerPin = GPIO_NUM_21;
