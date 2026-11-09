@@ -21,7 +21,10 @@ void DisplayManager::init() {
 
     gpio_num_t segments[] = {Config::segAPin, Config::segBPin, Config::segCPin, Config::segDPin, 
                              Config::segEPin, Config::segFPin, Config::segGPin, Config::segDpPin};
-    for (int i = 0; i < 8; i++) gpio_set_level(segments[i], 1);
+    
+    for (int i = 0; i < 8; i++) { 
+        gpio_set_level(segments[i], 1);
+    }    
 
     uint64_t mask = (1ULL << Config::segAPin) | (1ULL << Config::segBPin) | 
                     (1ULL << Config::segCPin) | (1ULL << Config::segDPin) | 
@@ -38,15 +41,19 @@ void DisplayManager::init() {
 }
 
 void DisplayManager::setMode(DisplayMode mode) { _mode = mode; }
+
 void DisplayManager::setDigits(uint8_t d1, uint8_t d2, uint8_t d3) {
     _digits[0] = d1; _digits[1] = d2; _digits[2] = d3;
 }
+
 void DisplayManager::setDigitsArray(const uint8_t* arr) {
     _digits[0] = arr[0]; _digits[1] = arr[1]; _digits[2] = arr[2];
 }
+
 void DisplayManager::setDots(bool b1, bool b2, bool b3) {
     _dots[0] = b1; _dots[1] = b2; _dots[2] = b3;
 }
+
 void DisplayManager::setActiveCount(uint8_t count) { _activeDigitsCount = count; }
 
 void DisplayManager::tick() {
@@ -63,7 +70,9 @@ void DisplayManager::tick() {
                             Config::segEPin, Config::segFPin, Config::segGPin, Config::segDpPin};
 
     //Гасимо поточний анод
-    for (int d = 0; d < 3; d++) gpio_set_level(digitsPins[d], 1);
+    for (int d = 0; d < 3; d++) { 
+        gpio_set_level(digitsPins[d], 1);
+    }
 
     if (_mode == DisplayMode::BLANK) return;
 
