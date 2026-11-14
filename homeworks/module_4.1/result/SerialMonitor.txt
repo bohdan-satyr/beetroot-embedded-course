@@ -1,0 +1,12 @@
+I (28625) ESP32_UART_TEST: Button pressed -> Sent 'T' to STM32
+I (30375) ESP32_UART_TEST: Button pressed -> Sent 'T' to STM32
+I (54155) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (55405) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (56445) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (57375) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (149215) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (151725) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (152965) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (154375) ESP32_UART_TEST: Received 'T' from STM32 -> LED toggled
+I (161015) ESP32_UART_TEST: Button pressed -> Sent 'T' to STM32
+I (162975) ESP32_UART_TEST: Button pressed -> Sent 'T' to STM32
