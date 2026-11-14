@@ -17,8 +17,7 @@ int main(void) {
     uint8_t tx_cmd = 'T';
     GPIO_PinState last_btn = GPIO_PIN_SET;
 
-    while (true) {
-        // 1. Кнопка PA0 -> відправка 'T' на ESP32
+    while (true) {       
         GPIO_PinState current_btn = HAL_GPIO_ReadPin(BUTTON_GPIO_Port, BUTTON_Pin);
         if (last_btn == GPIO_PIN_SET && current_btn == GPIO_PIN_RESET) {
             HAL_Delay(50);
@@ -28,7 +27,6 @@ int main(void) {
         }
         last_btn = current_btn;
 
-        // 2. Прийом 'T' від ESP32 -> перемикання діода PC13
         if (HAL_UART_Receive(&huart2, &rx_byte, 1, 10) == HAL_OK) {
             if (rx_byte == 'T') {
                 HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
