@@ -1,41 +1,41 @@
 # Embedded: що я робив (beetroot-embedded-course)
 
-Репозиторій: https://github.com/bohdan-satyr/beetroot-embedded-course
-Плати: ESP32, ESP32-S3 · Інструменти: PlatformIO, Arduino, ESP-IDF · Мови: C, C++
+Плати: ESP32, ESP32-S3, STM32F411 (Black Pill) · Інструменти: PlatformIO, Arduino, ESP-IDF, STM32Cube HAL / CubeMX, ST-Link · Мови: C, C++
 
 ## Проєкти (`projects/`)
 
-| Проєкт | Що зроблено | Ключове |
-|---|---|---|
-| **ESP32 Morse Code Decoder** | Введення азбуки Морзе кнопкою, декодування в A-Z / 0-9 | Розпізнавання крапка/тире за тривалістю, межі символів і слів за паузами, швидкість через потенціометр, LED + buzzer + Serial Monitor |
-| **ESP32 Traffic Light with Timer** | Світлофор за ПДР України з двозначним відліком на 7-сегментному дисплеї | Апаратний таймер `gptimer`, мінімальна ISR (`IRAM_ATTR`), автомат станів (5 фаз), динамічна індикація (мультиплексування, 5 мс), без FreeRTOS |
-| **ESP32 Safe with Combination Lock** | Кодовий сейф на ESP32-S3 (ESP-IDF, C++): код 1–3 цифри, замок на сервоприводі, ліміт часу на підбір 10–60 с | Введення коду енкодером KY-040 (підтвердження цифри реверсом обертання), 3-розрядний 7-сегментний дисплей із загальним анодом через PNP-ключі, FSM (IDLE → SETUP → INPUT → SUCCESS/FAIL), хеші паролів FNV-1a 32-bit замість відкритого коду, ШІМ серво і мелодії на LEDC, потенціометр задає таймер, без тасок (`esp_timer_get_time`), модульний ООП-код |
+| Проєкт | Що зроблено | Ключове | Демо |
+|---|---|---|---|
+| [**ESP32 Morse Code Decoder**](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Morse%20Code%20Decoder) | Введення азбуки Морзе кнопкою, декодування в A-Z / 0-9 | Розпізнавання крапка/тире за тривалістю, межі символів і слів за паузами, швидкість через потенціометр, LED + buzzer + Serial Monitor | [media](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Morse%20Code%20Decoder/media) |
+| [**ESP32 Traffic Light with Timer**](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Traffic%20Light%20with%20Timer) | Світлофор за ПДР України з двозначним відліком на 7-сегментному дисплеї | Апаратний таймер `gptimer`, мінімальна ISR (`IRAM_ATTR`), автомат станів (5 фаз), динамічна індикація (мультиплексування, 5 мс), без FreeRTOS | [media](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Traffic%20Light%20with%20Timer/media) |
+| [**ESP32 Safe with Combination Lock**](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Safe%20with%20Combination%20Lock) | Кодовий сейф на ESP32-S3 (ESP-IDF, C++): код 1–3 цифри, замок на сервоприводі, ліміт часу на підбір 10–60 с | Введення коду енкодером KY-040 (підтвердження цифри реверсом обертання), 3-розрядний 7-сегментний дисплей із загальним анодом через PNP-ключі, FSM (IDLE → SETUP → INPUT → SUCCESS/FAIL), хеші паролів FNV-1a 32-bit замість відкритого коду, ШІМ серво і мелодії на LEDC, потенціометр задає таймер, без тасок (`esp_timer_get_time`), модульний ООП-код | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/projects/ESP%2032%20Safe%20with%20Combination%20Lock/result) |
 
 ## Домашні завдання (`homeworks/`)
 
-| Модуль | Тема | Що показує |
-|---|---|---|
-| 1.4 | Два LED, зовнішня кнопка і BOOT (Arduino) | GPIO, читання кнопок, перемикання двох режимів |
-| 2.1 | Рефакторинг Arduino Blink в Embedded C++ | Клас `Led`, `enum class`, `constexpr`-конфіг, без `delay()` (на `millis()`), ISR кнопки з дебаунсом 50 мс, замір швидкості `loop()` через `micros()` |
-| 2.2 | Транзистор проти реле | Вимірювання часу спрацювання в мкс: транзистор ~1 мкс, реле SRD-05VDC ~3589 мкс; переривання, схема стенду |
-| 2.3 | Три LED з різними інтервалами (ESP-IDF) | Перехід Arduino → ESP-IDF, неблокуючий superloop на `esp_timer_get_time()`, `vTaskDelay(1)` проти спрацювання watchdog |
-| 2.4 | Дебаунс кнопки: 4 програмні методи + апаратний RC-фільтр | Без дебаунсу, за часом, за рівнем (`gpio_get_level`), polling із автоматом станів (4 стани); порівняльна таблиця на 20 натискань, аналіз сталої часу τ = R·C |
-| 2.5 | Таймери: керування витяжним вентилятором | `esp_timer` (колбеки без тасок і без `while(1)`), реле через NPN-транзистор, RGB-індикація WS2812B (`led_strip`), цикл 15 хв / 45 хв |
-| 3.1 | Розумне освітлення на фоторезисторі | ADC oneshot, фільтр ковзного середнього (SMA, вікно 10), гістерезис (пороги 1500 / 2000), C++ класи, дільник напруги |
-| 3.2 | Дослідження і калібрування ADC | Curve Fitting (eFuse), порівняння ручного розрахунку з каліброваним (похибка 10–17%), нелінійність і насичення |
-| 3.3 | ШІМ: LED і DC-двигун одним потенціометром | LEDC (1 кГц, 10 біт, 2 канали), перемикання режимів кнопкою BOOT, силова частина: 2N2222 + діод 1N4007, окреме живлення 5 В |
-| 3.4 | Неблокуючий програвач мелодій на пасивному зумері | LEDC для генерації частот, тік 50 мс на `esp_timer`, без тасок і блокуючих затримок, модульний C++ (`BuzzerPlayer`, `Pitches`, `Melodies`) |
-| 3.5 | Керування сервоприводом потенціометром 1:1 (ESP-IDF) | LEDC 50 Гц, 14 біт, лінійне відображення ходу потенціометра на 0–180°, `adc_oneshot_io_to_channel` (автоматичний вибір каналу АЦП за GPIO), `std::clamp`, логування лише при зміні кута, окреме живлення серво 5 В зі спільним GND, «один клас — один файл» |
+| Модуль | Тема | Що показує | Демо |
+|---|---|---|---|
+| [1.4](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_1.4) | Два LED, зовнішня кнопка і BOOT (Arduino) | GPIO, читання кнопок, перемикання двох режимів | [схема](https://github.com/bohdan-satyr/beetroot-embedded-course/blob/main/homeworks/module_1.4/scheme_1_4.png) |
+| [2.1](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.1) | Рефакторинг Arduino Blink в Embedded C++ | Клас `Led`, `enum class`, `constexpr`-конфіг, без `delay()` (на `millis()`), ISR кнопки з дебаунсом 50 мс, замір швидкості `loop()` через `micros()` | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.1/result) |
+| [2.2](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.2) | Транзистор проти реле | Вимірювання часу спрацювання в мкс: транзистор ~1 мкс, реле SRD-05VDC ~3589 мкс; переривання, схема стенду | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.2/result) |
+| [2.3](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.3) | Три LED з різними інтервалами (ESP-IDF) | Перехід Arduino → ESP-IDF, неблокуючий superloop на `esp_timer_get_time()`, `vTaskDelay(1)` проти спрацювання watchdog | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.3/result) |
+| [2.4](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.4) | Дебаунс кнопки: 4 програмні методи + апаратний RC-фільтр | Без дебаунсу, за часом, за рівнем (`gpio_get_level`), polling із автоматом станів (4 стани); порівняльна таблиця на 20 натискань, аналіз сталої часу τ = R·C | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.4/result) |
+| [2.5](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.5) | Таймери: керування витяжним вентилятором | `esp_timer` (колбеки без тасок і без `while(1)`), реле через NPN-транзистор, RGB-індикація WS2812B (`led_strip`), цикл 15 хв / 45 хв | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_2.5/result) |
+| [3.1](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.1) | Розумне освітлення на фоторезисторі | ADC oneshot, фільтр ковзного середнього (SMA, вікно 10), гістерезис (пороги 1500 / 2000), C++ класи, дільник напруги | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.1/result) · [media](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.1/media) |
+| [3.2](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.2) | Дослідження і калібрування ADC | Curve Fitting (eFuse), порівняння ручного розрахунку з каліброваним (похибка 10–17%), нелінійність і насичення | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.2/result) · [media](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.2/media) |
+| [3.3](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.3) | ШІМ: LED і DC-двигун одним потенціометром | LEDC (1 кГц, 10 біт, 2 канали), перемикання режимів кнопкою BOOT, силова частина: 2N2222 + діод 1N4007, окреме живлення 5 В | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.3/result) |
+| [3.4](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.4) | Неблокуючий програвач мелодій на пасивному зумері | LEDC для генерації частот, тік 50 мс на `esp_timer`, без тасок і блокуючих затримок, модульний C++ (`BuzzerPlayer`, `Pitches`, `Melodies`) | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.4/result) |
+| [3.5](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.5) | Керування сервоприводом потенціометром 1:1 (ESP-IDF) | LEDC 50 Гц, 14 біт, лінійне відображення ходу потенціометра на 0–180°, `adc_oneshot_io_to_channel` (автоматичний вибір каналу АЦП за GPIO), `std::clamp`, логування лише при зміні кута, окреме живлення серво 5 В зі спільним GND, «один клас — один файл» | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_3.5/result) |
+| [4.1](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_4.1) | Двоспрямований UART між ESP32-S3 і STM32F411 (PlatformIO, C++) | Дві різні родини МК в одному проєкті: ESP32-S3 (ESP-IDF, UART1 GPIO17/18, WS2812 через апаратний RMT, C++ клас) і STM32F411CE Black Pill (STM32Cube HAL, USART2 PA2/PA3, генерація периферії в CubeMX, прошивка через ST-Link). 115200 8N1, перехресне з'єднання TX↔RX + спільний GND, 3.3 В без перетворювачів рівнів. Кнопка однієї плати перемикає LED на іншій односимвольною командою `'T'`, опитування кнопок (polling), у `result/` демо | [result](https://github.com/bohdan-satyr/beetroot-embedded-course/tree/main/homeworks/module_4.1/result) |
 
 ## Зведений список навичок
 
 - **Мови:** C, C++ (класи, `enum class`, `constexpr`, namespace)
-- **Платформи й інструменти:** ESP32 / ESP32-S3, PlatformIO, ESP-IDF, Arduino framework, CMake, Serial Monitor, логічний аналізатор
-- **Периферія:** GPIO, зовнішні переривання, апаратні таймери (`gptimer`, `esp_timer`), PWM (LEDC, у т.ч. серво 50 Гц), ADC (oneshot + калібрування), квадратурний енкодер, UART/Serial
+- **Платформи й інструменти:** ESP32 / ESP32-S3, STM32F411 (Black Pill), PlatformIO, ESP-IDF, Arduino framework, STM32Cube HAL + STM32CubeMX, ST-Link, CMake, Serial Monitor, логічний аналізатор
+- **Периферія:** GPIO, зовнішні переривання, апаратні таймери (`gptimer`, `esp_timer`), PWM (LEDC, у т.ч. серво 50 Гц), ADC (oneshot + калібрування), квадратурний енкодер, UART (ESP32 UART1 ↔ STM32 USART2, міжплатформений обмін), RMT (WS2812)
 - **Архітектура прошивок:** неблокуючий superloop, автомати станів, мінімальні ISR, дебаунс (програмний і апаратний), фільтрація сигналу (SMA), гістерезис, зберігання секретів у вигляді хешів (FNV-1a), робота без FreeRTOS і з `vTaskDelay`
 - **Електроніка:** макетування, дільники напруги, транзисторні ключі (NPN, PNP), реле, сервопривід, енкодер KY-040, захисні діоди, RC-фільтри, живлення з окремих джерел зі спільним GND, 7-сегментні дисплеї, фоторезистор, потенціометр, пасивний зумер, DC-двигун, WS2812B
 - **Практики:** вимірювання і документування результатів (логи, відео, таблиці порівняння), читання datasheet, README і опис схем підключення до кожної роботи
 
 ## Ще не охоплено в репозиторії
 
-I2C, SPI, повноцінна робота з RTOS-тасками, bare-metal на регістрах.
+I2C, SPI, повноцінна робота з RTOS-тасками, bare-metal на регістрах (STM32 поки що через HAL).
